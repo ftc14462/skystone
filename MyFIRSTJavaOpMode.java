@@ -29,14 +29,18 @@ public class MyFIRSTJavaOpMode extends LinearOpMode {
 
         telemetry.addData("Status", "Initialized");
         telemetry.update();
-// Wait for the game to start (driver presses PLAY)
+
+        // Wait for the game to start (driver presses PLAY)
         waitForStart();
-// run until the end of the match (driver presses STOP)
+        // run until the end of the match (driver presses STOP)
         double tgtPower = 0;
+        double tgtPos = 0;
+
         while (opModeIsActive()) {
             tgtPower = -this.gamepad1.left_stick_y;
             motorTest.setPower(tgtPower);
-            //check to see if we need to move the servo.
+
+            /*//check to see if we need to move the servo.
             if (gamepad1.y) {
             // move to 0 degrees.
                 servoTest.setPosition(0);
@@ -46,7 +50,13 @@ public class MyFIRSTJavaOpMode extends LinearOpMode {
             } else if (gamepad1.a) {
             // move to 180 degrees.
                 servoTest.setPosition(1);
-            }
+            }*/
+
+            //set servo to stick x position
+            tgtPos =  0.5 - this.gamepad1.right_stick_y*0.5;
+            servoTest.setPosition(tgtPos);
+
+            telemetry.addData("Target Position", tgtPos);
             telemetry.addData("Servo Position", servoTest.getPosition());
             telemetry.addData("Target Power", tgtPower);
             telemetry.addData("Motor Power", motorTest.getPower());
