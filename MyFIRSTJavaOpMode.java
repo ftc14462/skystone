@@ -6,6 +6,7 @@ import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.hardware.Gyroscope;
 import com.qualcomm.robotcore.hardware.Servo;
 
+import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
 @TeleOp
@@ -69,8 +70,11 @@ public class MyFIRSTJavaOpMode extends LinearOpMode {
                 // button is not pressed.
                 telemetry.addData("Button", "NOT PRESSED");
             }
-            telemetry.addData("Status", "Running");
             telemetry.addData("Distance (cm)", sensorColorRange.getDistance(DistanceUnit.CM));
+            //telemetry.addData("imu velocity", imu.getAngularVelocity(AngleUnit.DEGREES));
+            //telemetry.addData("imu velocity axis (0=x, 1=y, 2=z)", imu.getAngularVelocityAxes());
+            telemetry.addData("Status", "Running");
+
             telemetry.update();
         }
     }
