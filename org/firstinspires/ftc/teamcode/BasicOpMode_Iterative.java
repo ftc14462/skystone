@@ -6,7 +6,7 @@
  *
  * Redistributions of source code must retain the above copyright notice, this list
  * of conditions and the following disclaimer.
- *
+
  * Redistributions in binary form must reproduce the above copyright notice, this
  * list of conditions and the following disclaimer in the documentation and/or
  * other materials provided with the distribution.
@@ -50,9 +50,9 @@ import com.qualcomm.robotcore.util.Range;
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
 
-@TeleOp(name="Our Tank Op Mode", group="Iterative Opmode")
+@TeleOp(name="Basic: Iterative OpMode", group="Iterative Opmode")
 //@Disabled
-public class TankOpMode_Iterative extends OpMode
+public class BasicOpMode_Iterative extends OpMode
 {
     // Declare OpMode members.
     private ElapsedTime runtime = new ElapsedTime();
@@ -110,17 +110,16 @@ public class TankOpMode_Iterative extends OpMode
 
         // POV Mode uses left stick to go forward, and right stick to turn.
         // - This uses basic math to combine motions and is easier to drive straight.
-        //double drive = -gamepad1.left_stick_y;
-        //double turn  =  gamepad1.right_stick_x;
-        //double turn  =  gamepad1.left_stick_x; //put all control in left stick
-        //leftPower    = Range.clip(drive + turn, -1.0, 1.0) ;
-        //rightPower   = Range.clip(drive - turn, -1.0, 1.0) ;
+        double sensitivity = 0.5;
+        double drive = sensitivity*gamepad1.left_stick_y;
+        double turn  =  -sensitivity*gamepad1.left_stick_x;
+        leftPower    = Range.clip(drive + turn, -1.0, 1.0) ;
+        rightPower   = Range.clip(drive - turn, -1.0, 1.0) ;
 
         // Tank Mode uses one stick to control each wheel.
         // - This requires no math, but it is hard to drive forward slowly and keep straight.
-        double sensitivity = 0.5;
-        leftPower  = sensitivity*gamepad1.left_stick_y ;
-        rightPower = sensitivity*gamepad1.right_stick_y ;
+        // leftPower  = -gamepad1.left_stick_y ;
+        // rightPower = -gamepad1.right_stick_y ;
 
         // Send calculated power to wheels
         leftDrive.setPower(leftPower);
