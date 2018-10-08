@@ -50,7 +50,7 @@ import com.qualcomm.robotcore.util.Range;
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
 
-@TeleOp(name="Basic: Iterative OpMode", group="Iterative Opmode")
+@TeleOp(name="Basic: Iterative OpMode Mason", group="Iterative Opmode")
 //@Disabled
 public class BasicOpMode_Iterative extends OpMode
 {
@@ -120,6 +120,13 @@ public class BasicOpMode_Iterative extends OpMode
         // - This requires no math, but it is hard to drive forward slowly and keep straight.
         // leftPower  = -gamepad1.left_stick_y ;
         // rightPower = -gamepad1.right_stick_y ;
+
+        // Make X button spin robot
+        boolean xButtonPushed = gamepad1.x;
+        if (xButtonPushed){
+            rightDrive.setPower(0.5);
+            leftDrive.setPower(-0.5);
+        }
 
         // Send calculated power to wheels
         leftDrive.setPower(leftPower);
