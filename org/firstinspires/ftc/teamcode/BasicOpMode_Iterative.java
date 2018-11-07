@@ -35,6 +35,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
+import com.sun.tools.javac.comp.Todo;
 
 /**
  * This file contains an example of an iterative (Non-Linear) "OpMode".
@@ -58,6 +59,7 @@ public class BasicOpMode_Iterative extends OpMode
     private ElapsedTime runtime = new ElapsedTime();
     private DcMotor leftDrive = null;
     private DcMotor rightDrive = null;
+    private DcMotor intakeDrive = null;
 
     /*
      * Code to run ONCE when the driver hits INIT
@@ -123,19 +125,46 @@ public class BasicOpMode_Iterative extends OpMode
 
         // Make X button spin robot
         boolean xButtonPushed = gamepad1.x;
-        if (xButtonPushed){
+        if (xButtonPushed) {
             rightDrive.setPower(0.5);
             leftDrive.setPower(-0.5);
+
+        }
+        // This code makes the Y button activate the intake going inward
+        // TODO: Make sure sign (- +) is correct, add intake/output motor
+
+        boolean yButtonPushed = gamepad1.y;
+        if (yButtonPushed) {
+            intakeDrive.setPower(0.5);
         }
 
-        // Send calculated power to wheels
-        leftDrive.setPower(leftPower);
+        boolean bButtonPushed = gamepad1.b;
+        if (bButtonPushed) {
+            intakeDrive.setPower(-0.5);
+        }
+
+        boolean yButtonPushed2 = gamepad2.y;
+        if (yButtonPushed2) {
+            intakeDrive.setPower(0.5);
+        }
+
+        boolean bButtonPushed2 = gamepad2.b;
+        if (bButtonPushed2) {
+            intakeDrive.setPower(-0.5);
+        }
+
+        float rightStickUp = gamepad2.right_stick_y;
+            intakeDrive.setPower(rightStickUp);
+
         rightDrive.setPower(rightPower);
+        leftDrive.setPower(leftPower);
 
         // Show the elapsed game time and wheel power.
         telemetry.addData("Status", "Run Time: " + runtime.toString());
         telemetry.addData("Motors", "left (%.2f), right (%.2f)", leftPower, rightPower);
     }
+
+
 
     /*
      * Code to run ONCE after the driver hits STOP
