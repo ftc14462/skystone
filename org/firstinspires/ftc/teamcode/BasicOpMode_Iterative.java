@@ -133,28 +133,21 @@ public class BasicOpMode_Iterative extends OpMode
         // This code makes the Y button activate the intake going inward
         // TODO: Make sure sign (- +) is correct, add intake/output motor
 
-        boolean yButtonPushed = gamepad1.y;
-        if (yButtonPushed) {
-            intakeDrive.setPower(0.5);
+        float sensitivityIntake = 0.5f;
+
+        boolean left_stick_button = gamepad2.left_stick_button;
+        if (left_stick_button) {
+            sensitivityIntake = 1;
+
         }
 
-        boolean bButtonPushed = gamepad1.b;
-        if (bButtonPushed) {
-            intakeDrive.setPower(-0.5);
-        }
+        float leftStickUp = gamepad2.left_stick_y;
+        leftStickUp = leftStickUp * sensitivityIntake;
+            intakeDrive.setPower(leftStickUp);
 
-        boolean yButtonPushed2 = gamepad2.y;
-        if (yButtonPushed2) {
-            intakeDrive.setPower(0.5);
-        }
 
-        boolean bButtonPushed2 = gamepad2.b;
-        if (bButtonPushed2) {
-            intakeDrive.setPower(-0.5);
-        }
 
-        float rightStickUp = gamepad2.right_stick_y;
-            intakeDrive.setPower(rightStickUp);
+
 
         rightDrive.setPower(rightPower);
         leftDrive.setPower(leftPower);
