@@ -130,15 +130,15 @@ public class BasicOpMode_Iterative extends OpMode
             leftDrive.setPower(-0.5);
 
         }
-        // This code makes the Y button activate the intake going inward
-        // TODO: Make sure sign (- +) is correct, add intake/output motor
+        // This code makes the left stick on gamepad 2 activate the intake
+        // TODO: Make sure sign (- +) is correct
 
         float sensitivityIntake = 0.5f;
 
+        //This code activates the output's bullet mode/fast mode
         boolean left_stick_button = gamepad2.left_stick_button;
         if (left_stick_button) {
             sensitivityIntake = 1;
-
         }
 
         float leftStickUp = gamepad2.left_stick_y;
@@ -146,15 +146,12 @@ public class BasicOpMode_Iterative extends OpMode
             intakeDrive.setPower(leftStickUp);
 
 
-
-
-
         rightDrive.setPower(rightPower);
         leftDrive.setPower(leftPower);
 
         // Show the elapsed game time and wheel power.
         telemetry.addData("Status", "Run Time: " + runtime.toString());
-        telemetry.addData("Motors", "left (%.2f), right (%.2f)", leftPower, rightPower);
+        telemetry.addData("Motors", "left (%.2f), right (%.2f), leftstick (%.2f)", leftPower, rightPower, leftStickUp);
     }
 
 
