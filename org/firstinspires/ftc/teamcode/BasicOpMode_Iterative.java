@@ -59,6 +59,7 @@ public class BasicOpMode_Iterative extends OpMode
     private DcMotor leftDrive = null;
     private DcMotor rightDrive = null;
     private DcMotor intakeDrive = null;
+    private DcMotor intakeDrive2 = null;
 
     /*
      * Code to run ONCE when the driver hits INIT
@@ -73,6 +74,8 @@ public class BasicOpMode_Iterative extends OpMode
         leftDrive  = hardwareMap.get(DcMotor.class, "left motor");
         rightDrive = hardwareMap.get(DcMotor.class, "right motor");
         intakeDrive = hardwareMap.get(DcMotor.class, "intakeDrive");
+        intakeDrive2 = hardwareMap.get(DcMotor.class, "intakeDrive2");
+
 
         // Most robots need the motor on one side to be reversed to drive forward
         // Reverse the motor that runs backwards when connected directly to the battery
@@ -112,7 +115,7 @@ public class BasicOpMode_Iterative extends OpMode
 
         // POV Mode uses left stick to go forward, and right stick to turn.
         // - This uses basic math to combine motions and is easier to drive straight.
-        double sensitivity = 0.5;
+        double sensitivity = 0.9;
         double drive = sensitivity*gamepad1.left_stick_y;
         double turn  =  -sensitivity*gamepad1.left_stick_x;
         leftPower    = Range.clip(drive + turn, -1.0, 1.0) ;
@@ -144,6 +147,7 @@ public class BasicOpMode_Iterative extends OpMode
         float leftStickUp = gamepad2.left_stick_y;
         leftStickUp = leftStickUp * sensitivityIntake;
         intakeDrive.setPower(leftStickUp);
+        intakeDrive2.setPower(leftStickUp);
 
 
         rightDrive.setPower(rightPower);
