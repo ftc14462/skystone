@@ -128,7 +128,7 @@ public class AutonRoverRuckus14462 extends LinearOpMode {
      * This is where we move the robot from the lander to the depot
      */
     private void moveToDepot_crater() {
-        encoderDrive(DRIVE_SPEED,  86,  86, 8.0);  // S1: Forward 47 Inches with 5 Sec timeout
+        encoderDrive(DRIVE_SPEED,  21,  21, 8.0);  // S1: Forward 47 Inches with 5 Sec timeout
     }
 
     /**
