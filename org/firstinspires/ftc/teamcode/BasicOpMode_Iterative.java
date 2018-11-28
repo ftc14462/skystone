@@ -35,7 +35,6 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
-import com.sun.tools.javac.comp.Todo;
 
 /**
  * This file contains an example of an iterative (Non-Linear) "OpMode".
@@ -73,11 +72,12 @@ public class BasicOpMode_Iterative extends OpMode
         // step (using the FTC Robot Controller app on the phone).
         leftDrive  = hardwareMap.get(DcMotor.class, "left motor");
         rightDrive = hardwareMap.get(DcMotor.class, "right motor");
+        intakeDrive = hardwareMap.get(DcMotor.class, "intakeDrive");
 
         // Most robots need the motor on one side to be reversed to drive forward
         // Reverse the motor that runs backwards when connected directly to the battery
-        leftDrive.setDirection(DcMotor.Direction.FORWARD);
-        rightDrive.setDirection(DcMotor.Direction.REVERSE);
+        leftDrive.setDirection(DcMotor.Direction.REVERSE);
+        rightDrive.setDirection(DcMotor.Direction.FORWARD);
 
         // Tell the driver that initialization is complete.
         telemetry.addData("Status", "Initialized");
@@ -143,7 +143,7 @@ public class BasicOpMode_Iterative extends OpMode
 
         float leftStickUp = gamepad2.left_stick_y;
         leftStickUp = leftStickUp * sensitivityIntake;
-            intakeDrive.setPower(leftStickUp);
+        intakeDrive.setPower(leftStickUp);
 
 
         rightDrive.setPower(rightPower);
