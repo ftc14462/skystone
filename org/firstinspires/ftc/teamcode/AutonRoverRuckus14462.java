@@ -63,12 +63,12 @@ import com.qualcomm.robotcore.util.ElapsedTime;
  */
 
 @Autonomous(name="Pushbot: Auto Drive By Encoder", group="Pushbot")
-//@Disabled
-public class AutonRoverRuckus14462 extends LinearOpMode {
+@Disabled
+public abstract class AutonRoverRuckus14462 extends LinearOpMode {
 
     /* Declare OpMode members. */
     HardwarePushbot         robot   = new HardwarePushbot();   // Use a Pushbot's hardware
-    private ElapsedTime     runtime = new ElapsedTime();
+    protected ElapsedTime     runtime = new ElapsedTime();
 
     static final double     COUNTS_PER_MOTOR_REV    = 1440 ;    // eg: TETRIX Motor Encoder
     static final double     DRIVE_GEAR_REDUCTION    = 1.0 ;     // This is < 1.0 if geared UP
@@ -78,76 +78,12 @@ public class AutonRoverRuckus14462 extends LinearOpMode {
     static final double     DRIVE_SPEED             = 0.6;
     static final double     TURN_SPEED              = 0.5;
 
-    @Override
-    public void runOpMode() {
-
-        /*
-         * Initialize the drive system variables.
-         * The init() method of the hardware class does all the work here
-         */
-        robot.init(hardwareMap);
-
-        // Send telemetry message to signify robot waiting;
-        telemetry.addData("Status", "Resetting Encoders");    //
-        telemetry.update();
-
-        robot.leftDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        robot.rightDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-
-        robot.leftDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        robot.rightDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-
-        // Send telemetry message to indicate successful Encoder reset
-        telemetry.addData("Path0",  "Starting at %7d, %7d",
-                robot.leftDrive.getCurrentPosition()
-                ,robot.rightDrive.getCurrentPosition()
-        );
-        telemetry.update();
-
-        // Wait for the game to start (driver presses PLAY)
-        waitForStart();
-
-        lowerFromLander();
-        moveToDepot_crater();
-        depositMarker();
-        sleep(1000);     // pause for servos to move
-
-        telemetry.addData("Path", "Complete");
-        telemetry.addData("encoder",robot.leftDrive.getCurrentPosition()
-        );
-        telemetry.update();
-    }
-
-    /**
-     * This is where the robot deposits the marker
-     */
-    private void depositMarker() {
-        robot.intakeDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        runtime.reset();
-        robot.intakeDrive.setPower(Math.abs(0.5));
-        double timeoutS = 5;
-        while (opModeIsActive() &&
-                (runtime.seconds() < timeoutS)) {
-
-            // Display it for the driver.
-            //telemetry.addData("Path1",  "Running to %7d", timeoutS);
-            telemetry.update();
-        }
-        robot.intakeDrive.setPower(0);
-    }
-
-    /**
-     * This is where we move the robot from the lander to the depot
-     */
-    private void moveToDepot_crater() {
-        encoderDrive(DRIVE_SPEED, 4,  4, 2.0);  // S1: Forward 8 Inches with 5 Sec timeout
-    }
 
     /**
      * This is where we make the robot lower from the lander
      * TODO find 3rd motor to let robot down
      */
-    private void lowerFromLander() {
+    protected void lowerFromLander() {
 
     }
 
