@@ -71,7 +71,7 @@ public class AutonRoverRuckus14462 extends LinearOpMode {
     private ElapsedTime     runtime = new ElapsedTime();
 
     static final double     COUNTS_PER_MOTOR_REV    = 1440 ;    // eg: TETRIX Motor Encoder
-    static final double     DRIVE_GEAR_REDUCTION    = 2.0 ;     // This is < 1.0 if geared UP
+    static final double     DRIVE_GEAR_REDUCTION    = 1.0 ;     // This is < 1.0 if geared UP
     static final double     WHEEL_DIAMETER_INCHES   = 4.0 ;     // For figuring circumference
     static final double     COUNTS_PER_INCH         = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) /
             (WHEEL_DIAMETER_INCHES * 3.1415);
@@ -122,13 +122,25 @@ public class AutonRoverRuckus14462 extends LinearOpMode {
      * This is where the robot deposits the marker
      */
     private void depositMarker() {
+        robot.intakeDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        runtime.reset();
+        robot.intakeDrive.setPower(Math.abs(0.5));
+        double timeoutS = 5;
+        while (opModeIsActive() &&
+                (runtime.seconds() < timeoutS)) {
+
+            // Display it for the driver.
+            //telemetry.addData("Path1",  "Running to %7d", timeoutS);
+            telemetry.update();
+        }
+        robot.intakeDrive.setPower(0);
     }
 
     /**
      * This is where we move the robot from the lander to the depot
      */
     private void moveToDepot_crater() {
-        encoderDrive(DRIVE_SPEED,  21,  21, 8.0);  // S1: Forward 47 Inches with 5 Sec timeout
+        encoderDrive(DRIVE_SPEED, 4,  4, 2.0);  // S1: Forward 8 Inches with 5 Sec timeout
     }
 
     /**
@@ -162,11 +174,11 @@ public class AutonRoverRuckus14462 extends LinearOpMode {
             robot.leftDrive.setTargetPosition(newLeftTarget);
             robot.rightDrive.setTargetPosition(newRightTarget);
 
-            // Turn On RUN_TO_POSITION
+            // Turn On RUN_TO_POSITION                 :)
             robot.leftDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             robot.rightDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
-            // reset the timeout time and start motion.
+            // reset the timeout time and start motion.                 :)
             runtime.reset();
             robot.leftDrive.setPower(Math.abs(speed));
             robot.rightDrive.setPower(Math.abs(speed));
@@ -179,11 +191,11 @@ public class AutonRoverRuckus14462 extends LinearOpMode {
             // onto the next step, use (isBusy() || isBusy()) in the loop test.
             while (opModeIsActive() &&
                     (runtime.seconds() < timeoutS) &&
-                    (robot.leftDrive.isBusy() /*&& robot.rightDrive.isBusy()*/)) {
+                    (robot.leftDrive.isBusy() && robot.rightDrive.isBusy())) {
 
                 // Display it for the driver.
                 telemetry.addData("Path1",  "Running to %7d", newLeftTarget,  newRightTarget);
-                telemetry.addData("Path2",  "Running at %7d",
+                telemetry.addData("Path2",  "Running at %7d,%7d",
                         robot.leftDrive.getCurrentPosition(),
                         robot.rightDrive.getCurrentPosition());
                 telemetry.update();

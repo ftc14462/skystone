@@ -59,7 +59,7 @@ public class BasicOpMode_Iterative extends OpMode
     private DcMotor leftDrive = null;
     private DcMotor rightDrive = null;
     private DcMotor intakeDrive = null;
-    private DcMotor intakeDrive2 = null;
+    //private DcMotor intakeDrive2 = null;
 
     /*
      * Code to run ONCE when the driver hits INIT
@@ -74,7 +74,7 @@ public class BasicOpMode_Iterative extends OpMode
         leftDrive  = hardwareMap.get(DcMotor.class, "left motor");
         rightDrive = hardwareMap.get(DcMotor.class, "right motor");
         intakeDrive = hardwareMap.get(DcMotor.class, "intakeDrive");
-        intakeDrive2 = hardwareMap.get(DcMotor.class, "intakeDrive2");
+        //intakeDrive2 = hardwareMap.get(DcMotor.class, "intakeDrive2");
 
 
         // Most robots need the motor on one side to be reversed to drive forward
@@ -147,7 +147,7 @@ public class BasicOpMode_Iterative extends OpMode
         float leftStickUp = gamepad2.left_stick_y;
         leftStickUp = leftStickUp * sensitivityIntake;
         intakeDrive.setPower(leftStickUp);
-        intakeDrive2.setPower(leftStickUp);
+        //intakeDrive2.setPower(leftStickUp);
 
 
         rightDrive.setPower(rightPower);
