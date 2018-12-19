@@ -70,9 +70,9 @@ public abstract class AutonRoverRuckus14462 extends LinearOpMode {
     HardwarePushbot         robot   = new HardwarePushbot();   // Use a Pushbot's hardware
     protected ElapsedTime     runtime = new ElapsedTime();
 
-    static final double     COUNTS_PER_MOTOR_REV    = 1440 ;    // eg: TETRIX Motor Encoder
+    static final double     COUNTS_PER_MOTOR_REV    = 1120;    // eg: TETRIX Motor Encoder
     static final double     DRIVE_GEAR_REDUCTION    = 1.0 ;     // This is < 1.0 if geared UP
-    static final double     WHEEL_DIAMETER_INCHES   = 4.0 ;     // For figuring circumference
+    static final double     WHEEL_DIAMETER_INCHES   = 3.5 ;     // For figuring circumference
     static final double     COUNTS_PER_INCH         = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) /
             (WHEEL_DIAMETER_INCHES * 3.1415);
     static final double     DRIVE_SPEED             = 0.6;
@@ -105,8 +105,10 @@ public abstract class AutonRoverRuckus14462 extends LinearOpMode {
         if (opModeIsActive()) {
 
             // Determine new target position, and pass to motor controller
-            newLeftTarget = robot.leftDrive.getCurrentPosition() + (int)(leftInches * COUNTS_PER_INCH);
-            newRightTarget = robot.rightDrive.getCurrentPosition() + (int)(rightInches * COUNTS_PER_INCH);
+            int encoderdistence = (int) (leftInches * COUNTS_PER_INCH);
+            int initialposition = robot.leftDrive.getCurrentPosition();
+            newLeftTarget = robot.leftDrive.getCurrentPosition() + encoderdistence;
+            newRightTarget = robot.rightDrive.getCurrentPosition() + encoderdistence;
             robot.leftDrive.setTargetPosition(newLeftTarget);
             robot.rightDrive.setTargetPosition(newRightTarget);
 
@@ -130,10 +132,10 @@ public abstract class AutonRoverRuckus14462 extends LinearOpMode {
                     (robot.leftDrive.isBusy() && robot.rightDrive.isBusy())) {
 
                 // Display it for the driver.
-                telemetry.addData("Path1",  "Running to %7d", newLeftTarget,  newRightTarget);
+                telemetry.addData("Path1",  "Running to %7d", encoderdistence,  encoderdistence);
                 telemetry.addData("Path2",  "Running at %7d,%7d",
-                        robot.leftDrive.getCurrentPosition(),
-                        robot.rightDrive.getCurrentPosition());
+                        robot.leftDrive.getCurrentPosition()-initialposition,
+                        robot.rightDrive.getCurrentPosition()-initialposition);
                 telemetry.update();
             }
 

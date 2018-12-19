@@ -111,6 +111,6 @@ public class AutonRoverRuckus14462Crater extends AutonRoverRuckus14462 {
      * This is where we move the robot from the lander to the crater
      */
     protected void moveToCrater() {
-        encoderDrive(DRIVE_SPEED, 4,  4, 2.0);  // S1: Forward 8 Inches with 5 Sec timeout
+        encoderDrive(DRIVE_SPEED, 44,  44, 5.0);  // S1: Forward 8 Inches with 5 Sec timeout
     }
 }
