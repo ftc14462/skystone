@@ -176,7 +176,7 @@ public class BasicOpMode_Iterative extends OpMode
         left_trigger = left_trigger * sensitivityLinear;
         linearPower = left_trigger;
 
-        //This code moves the linear slide up.
+        //This code moves the linear slide up.     HEMLO 2
         float right_trigger = gamepad2.right_trigger;
         right_trigger = right_trigger * -1 * sensitivityLinear;
         if (right_trigger > 0) {
