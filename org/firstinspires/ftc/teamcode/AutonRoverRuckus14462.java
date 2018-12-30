@@ -84,7 +84,18 @@ public abstract class AutonRoverRuckus14462 extends LinearOpMode {
      * TODO find 3rd motor to let robot down
      */
     protected void lowerFromLander() {
+        robot.linearDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        runtime.reset();
+        robot.linearDrive.setPower(Math.abs(0.5));
+        double timeoutS = 5;
+        while (opModeIsActive() &&
+                (runtime.seconds() < timeoutS)) {
 
+            // Display it for the driver.
+            //telemetry.addData("Path1",  "Running to %7d", timeoutS);
+            telemetry.update();
+        }
+        robot.linearDrive.setPower(0);
     }
 
     /*

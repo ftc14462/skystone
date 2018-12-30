@@ -67,6 +67,7 @@ public class HardwarePushbot
     HardwareMap hwMap           =  null;
     private ElapsedTime period  = new ElapsedTime();
     public DcMotor intakeDrive;
+    public DcMotor linearDrive;
 
     /* Constructor */
     public HardwarePushbot(){

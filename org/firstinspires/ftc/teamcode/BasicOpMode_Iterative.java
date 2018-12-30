@@ -59,6 +59,8 @@ public class BasicOpMode_Iterative extends OpMode
     private DcMotor leftDrive = null;
     private DcMotor rightDrive = null;
     private DcMotor intakeDrive = null;
+    private DcMotor linearDrive = null;
+    private double sensitivity = 0.9;
     //private DcMotor intakeDrive2 = null;
 
     /*
@@ -74,6 +76,7 @@ public class BasicOpMode_Iterative extends OpMode
         leftDrive  = hardwareMap.get(DcMotor.class, "left motor");
         rightDrive = hardwareMap.get(DcMotor.class, "right motor");
         intakeDrive = hardwareMap.get(DcMotor.class, "intakeDrive");
+        linearDrive = hardwareMap.get(DcMotor.class, "linearDrive");
         //intakeDrive2 = hardwareMap.get(DcMotor.class, "intakeDrive2");
 
 
@@ -109,13 +112,28 @@ public class BasicOpMode_Iterative extends OpMode
         // Setup a variable for each drive wheel to save power level for telemetry
         double leftPower;
         double rightPower;
+        double intakePower;
 
         // Choose to drive using either Tank Mode, or POV Mode
         // Comment out the method that's not used.  The default below is POV.
 
         // POV Mode uses left stick to go forward, and right stick to turn.
         // - This uses basic math to combine motions and is easier to drive straight.
-        double sensitivity = 0.9;
+        /*double sensitivity = 0.9;*/
+
+        boolean aButtonPushed = gamepad1.a;
+        if (aButtonPushed) {
+            sensitivity = sensitivity + 0.01;
+        }
+
+        boolean bButtonPushed = gamepad1.b;
+        if (bButtonPushed) {
+            sensitivity = sensitivity - 0.01;
+        }
+//We are making our code make sure that when we add and decress sensitivity does not go over 1 and less than 0
+        sensitivity = Math.max(sensitivity,0);
+        sensitivity = Math.min(sensitivity,1);
+
         double drive = sensitivity*gamepad1.left_stick_y;
         double turn  =  -sensitivity*gamepad1.left_stick_x;
         leftPower    = Range.clip(drive + turn, -1.0, 1.0) ;
@@ -129,9 +147,10 @@ public class BasicOpMode_Iterative extends OpMode
         // Make X button spin robot
         boolean xButtonPushed = gamepad1.x;
         if (xButtonPushed) {
-            rightDrive.setPower(0.5);
-            leftDrive.setPower(-0.5);
-
+                // rightDrive.setPower(0.5);
+                // leftDrive.setPower(-0.5);
+                rightPower = 0.5;
+                leftPower = -0.5;
         }
         // This code makes the left stick on gamepad 2 activate the intake
         // TODO: Make sure sign (- +) is correct
@@ -143,19 +162,35 @@ public class BasicOpMode_Iterative extends OpMode
         if (left_stick_button) {
             sensitivityIntake = 1;
         }
-
+        //This code moves the intake
         float leftStickUp = gamepad2.left_stick_y;
         leftStickUp = leftStickUp * sensitivityIntake;
-        intakeDrive.setPower(leftStickUp);
+        intakePower = leftStickUp;
+        //intakeDrive.setPower(leftStickUp);
         //intakeDrive2.setPower(leftStickUp);
 
+        //This code moves the linear slide down.
+        double linearPower = 0;
+        float left_trigger = gamepad2.left_trigger;
+        float sensitivityLinear = 0.75f;
+        left_trigger = left_trigger * sensitivityLinear;
+        linearPower = left_trigger;
 
+        //This code moves the linear slide up.
+        float right_trigger = gamepad2.right_trigger;
+        right_trigger = right_trigger * -1 * sensitivityLinear;
+        if (right_trigger > 0) {
+            linearPower = right_trigger;
+        }
+
+        linearDrive.setPower(linearPower);
+        intakeDrive.setPower(intakePower);
         rightDrive.setPower(rightPower);
         leftDrive.setPower(leftPower);
-
         // Show the elapsed game time and wheel power.
         telemetry.addData("Status", "Run Time: " + runtime.toString());
         telemetry.addData("Motors", "left (%.2f), right (%.2f), leftstick (%.2f)", leftPower, rightPower, leftStickUp);
+        telemetry.addData("sensitivity", sensitivity);
     }
 
 
