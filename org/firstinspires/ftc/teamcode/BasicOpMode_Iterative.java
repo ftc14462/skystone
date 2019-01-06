@@ -33,6 +33,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
@@ -60,8 +61,8 @@ public class BasicOpMode_Iterative extends OpMode
     private DcMotor rightDrive = null;
     private DcMotor intakeDrive = null;
     private DcMotor linearDrive = null;
+    private Servo hookDrive = null;
     private double sensitivity = 0.9;
-    //private DcMotor intakeDrive2 = null;
 
     /*
      * Code to run ONCE when the driver hits INIT
@@ -77,7 +78,6 @@ public class BasicOpMode_Iterative extends OpMode
         rightDrive = hardwareMap.get(DcMotor.class, "right motor");
         intakeDrive = hardwareMap.get(DcMotor.class, "intakeDrive");
         linearDrive = hardwareMap.get(DcMotor.class, "linearDrive");
-        //intakeDrive2 = hardwareMap.get(DcMotor.class, "intakeDrive2");
 
 
         // Most robots need the motor on one side to be reversed to drive forward
@@ -167,7 +167,6 @@ public class BasicOpMode_Iterative extends OpMode
         leftStickUp = leftStickUp * sensitivityIntake;
         intakePower = leftStickUp;
         //intakeDrive.setPower(leftStickUp);
-        //intakeDrive2.setPower(leftStickUp);
 
         //This code moves the linear slide down.
         double linearPower = 0;
@@ -179,9 +178,11 @@ public class BasicOpMode_Iterative extends OpMode
         //This code moves the linear slide up.     HEMLO 2
         float right_trigger = gamepad2.right_trigger;
         right_trigger = right_trigger * -1 * sensitivityLinear;
-        if (right_trigger > 0) {
+        if (right_trigger < 0) {
             linearPower = right_trigger;
         }
+
+
 
         linearDrive.setPower(linearPower);
         intakeDrive.setPower(intakePower);
@@ -189,7 +190,7 @@ public class BasicOpMode_Iterative extends OpMode
         leftDrive.setPower(leftPower);
         // Show the elapsed game time and wheel power.
         telemetry.addData("Status", "Run Time: " + runtime.toString());
-        telemetry.addData("Motors", "left (%.2f), right (%.2f), leftstick (%.2f)", leftPower, rightPower, leftStickUp);
+        telemetry.addData("Motors", "left (%.2f), right (%.2f), intakePower (%.2f), LinearPower (%.2f)", leftPower, rightPower, intakePower, linearPower);
         telemetry.addData("sensitivity", sensitivity);
     }
 
