@@ -63,6 +63,9 @@ public class BasicOpMode_Iterative extends OpMode
     private DcMotor linearDrive = null;
     private Servo hookDrive = null;
     private double sensitivity = 0.9;
+    private boolean isItUP = false;
+    private final static double hook_home = 0.2;
+    private double hookPosition;
 
     /*
      * Code to run ONCE when the driver hits INIT
@@ -78,12 +81,14 @@ public class BasicOpMode_Iterative extends OpMode
         rightDrive = hardwareMap.get(DcMotor.class, "right motor");
         intakeDrive = hardwareMap.get(DcMotor.class, "intakeDrive");
         linearDrive = hardwareMap.get(DcMotor.class, "linearDrive");
+        hookDrive = hardwareMap.get (Servo.class,"hookDrive");
 
 
         // Most robots need the motor on one side to be reversed to drive forward
         // Reverse the motor that runs backwards when connected directly to the battery
         leftDrive.setDirection(DcMotor.Direction.REVERSE);
         rightDrive.setDirection(DcMotor.Direction.FORWARD);
+        hookDrive.setPosition(hook_home);
 
         // Tell the driver that initialization is complete.
         telemetry.addData("Status", "Initialized");
@@ -182,16 +187,28 @@ public class BasicOpMode_Iterative extends OpMode
             linearPower = right_trigger;
         }
 
+        boolean right_bumper = gamepad2.right_bumper;
+        /*if (right_bumper)  {
+            hookPosition = -0.5;
+        }
+        boolean left_bumper = gamepad2.left_bumper;
+        if (left_bumper) {
+            hookPosition = 0.5;
+        }*/
+
+        hookPosition =  0.5 - this.gamepad1.right_stick_y*0.5;
 
 
-        linearDrive.setPower(linearPower);
+        hookDrive.setPosition(hookPosition);
+        /*linearDrive.setPower(linearPower);
         intakeDrive.setPower(intakePower);
         rightDrive.setPower(rightPower);
-        leftDrive.setPower(leftPower);
+        leftDrive.setPower(leftPower);*/
         // Show the elapsed game time and wheel power.
         telemetry.addData("Status", "Run Time: " + runtime.toString());
         telemetry.addData("Motors", "left (%.2f), right (%.2f), intakePower (%.2f), LinearPower (%.2f)", leftPower, rightPower, intakePower, linearPower);
         telemetry.addData("sensitivity", sensitivity);
+        telemetry.addData("hookPosition", hookPosition);
     }
 
 
