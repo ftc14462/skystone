@@ -84,6 +84,7 @@ public abstract class AutonRoverRuckus14462 extends LinearOpMode {
      * This is where we make the robot lower from the lander
      * TODO find 3rd motor to let robot down
      */
+    // this code lowers the robot from the lander.                      HEMLO 3
     protected void lowerFromLander() {
         robot.linearDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         runtime.reset();
