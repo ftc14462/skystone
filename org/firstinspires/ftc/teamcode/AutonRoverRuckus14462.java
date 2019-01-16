@@ -33,6 +33,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 /**
@@ -88,15 +89,19 @@ public abstract class AutonRoverRuckus14462 extends LinearOpMode {
         runtime.reset();
         robot.linearDrive.setPower(Math.abs(0.5));
         double timeoutS = 5;
-        while (opModeIsActive() &&
-                (runtime.seconds() < timeoutS)) {
 
-            // Display it for the driver.
+        // Display it for the driver.
+        while (opModeIsActive() &&
+                (runtime.seconds() < timeoutS) && (robot.linearDrive.isBusy())) {
             //telemetry.addData("Path1",  "Running to %7d", timeoutS);
             telemetry.update();
         }
         robot.linearDrive.setPower(0);
-    }
+
+        //We are moving the hook that is holding us down so we can move around
+        double hookPosition = 1.0;
+        robot.hookDrive.setPosition(hookPosition);
+        }
 
     /*
      *  Method to perfmorm a relative move, based on encoder counts.

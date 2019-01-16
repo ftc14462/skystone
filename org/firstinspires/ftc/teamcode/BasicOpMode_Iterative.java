@@ -64,7 +64,7 @@ public class BasicOpMode_Iterative extends OpMode
     private Servo hookDrive = null;
     private double sensitivity = 0.9;
     private boolean isItUP = false;
-    private final static double hook_home = 0.2;
+    private final static double hook_home = 0.0;
     private double hookPosition;
 
     /*
@@ -188,16 +188,13 @@ public class BasicOpMode_Iterative extends OpMode
         }
 
         boolean right_bumper = gamepad2.right_bumper;
-        /*if (right_bumper)  {
-            hookPosition = -0.5;
+        if (right_bumper)  {
+            hookPosition = 1.0;
         }
         boolean left_bumper = gamepad2.left_bumper;
         if (left_bumper) {
-            hookPosition = 0.5;
-        }*/
-
-        hookPosition =  0.5 - this.gamepad1.right_stick_y*0.5;
-
+            hookPosition = 0.0;
+        }
 
         hookDrive.setPosition(hookPosition);
         /*linearDrive.setPower(linearPower);
