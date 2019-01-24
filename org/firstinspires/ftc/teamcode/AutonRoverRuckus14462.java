@@ -82,7 +82,6 @@ public abstract class AutonRoverRuckus14462 extends LinearOpMode {
 
     /**
      * This is where we make the robot lower from the lander
-     * TODO find 3rd motor to let robot down
      */
     // this code lowers the robot from the lander.                      HEMLO 3
     protected void lowerFromLander() {
@@ -105,7 +104,7 @@ public abstract class AutonRoverRuckus14462 extends LinearOpMode {
         }
 
     /*
-     *  Method to perfmorm a relative move, based on encoder counts.
+     *  Method to perform a relative move, based on encoder counts.
      *  Encoders are not reset as the move is based on the current position.
      *  Move will stop if any of three conditions occur:
      *  1) Move gets to the desired position
@@ -153,6 +152,7 @@ public abstract class AutonRoverRuckus14462 extends LinearOpMode {
                 telemetry.addData("Path2",  "Running at %7d,%7d",
                         robot.leftDrive.getCurrentPosition()-initialposition,
                         robot.rightDrive.getCurrentPosition()-initialposition);
+
                 telemetry.update();
             }
 

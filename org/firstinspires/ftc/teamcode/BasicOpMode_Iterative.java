@@ -135,7 +135,7 @@ public class BasicOpMode_Iterative extends OpMode
         if (bButtonPushed) {
             sensitivity = sensitivity - 0.01;
         }
-//We are making our code make sure that when we add and decress sensitivity does not go over 1 and less than 0
+//We are making our code make sure that when we add and decrease sensitivity does not go over 1 and less than 0
         sensitivity = Math.max(sensitivity,0);
         sensitivity = Math.min(sensitivity,1);
 
@@ -157,8 +157,15 @@ public class BasicOpMode_Iterative extends OpMode
                 rightPower = 0.5;
                 leftPower = -0.5;
         }
+
+        boolean yButtonPushed = gamepad1.y;
+        if (yButtonPushed) {
+            // rightDrive.setPower(0.5);
+            // leftDrive.setPower(-0.5);
+            rightPower = -0.5;
+            leftPower = 0.5;
+        }
         // This code makes the left stick on gamepad 2 activate the intake
-        // TODO: Make sure sign (- +) is correct
 
         float sensitivityIntake = 0.5f;
 
@@ -177,35 +184,37 @@ public class BasicOpMode_Iterative extends OpMode
         double linearPower = 0;
         float left_trigger = gamepad2.left_trigger;
         float sensitivityLinear = 0.75f;
-        left_trigger = left_trigger * sensitivityLinear;
+        left_trigger = left_trigger * -1 * sensitivityLinear;
         linearPower = left_trigger;
 
         //This code moves the linear slide up.     HEMLO 2
         float right_trigger = gamepad2.right_trigger;
-        right_trigger = right_trigger * -1 * sensitivityLinear;
-        if (right_trigger < 0) {
+        right_trigger = right_trigger * sensitivityLinear;
+        if (right_trigger > 0) {
             linearPower = right_trigger;
         }
 
         boolean right_bumper = gamepad2.right_bumper;
         if (right_bumper)  {
-            hookPosition = 1.0;
+            hookPosition = 0.0;
         }
         boolean left_bumper = gamepad2.left_bumper;
         if (left_bumper) {
-            hookPosition = 0.0;
+            hookPosition = 1.0;
         }
 
         hookDrive.setPosition(hookPosition);
-        /*linearDrive.setPower(linearPower);
+        linearDrive.setPower(linearPower);
         intakeDrive.setPower(intakePower);
         rightDrive.setPower(rightPower);
-        leftDrive.setPower(leftPower);*/
+        leftDrive.setPower(leftPower);
         // Show the elapsed game time and wheel power.
         telemetry.addData("Status", "Run Time: " + runtime.toString());
         telemetry.addData("Motors", "left (%.2f), right (%.2f), intakePower (%.2f), LinearPower (%.2f)", leftPower, rightPower, intakePower, linearPower);
         telemetry.addData("sensitivity", sensitivity);
         telemetry.addData("hookPosition", hookPosition);
+        int linearPosition = linearDrive.getCurrentPosition();
+        telemetry.addData("LinearPosition", linearPosition);
     }
 
 
