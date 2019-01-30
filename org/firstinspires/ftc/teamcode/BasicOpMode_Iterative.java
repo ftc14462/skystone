@@ -193,7 +193,7 @@ public class BasicOpMode_Iterative extends OpMode
         if (right_trigger > 0) {
             linearPower = right_trigger;
         }
-
+        //          HEMLO 4
         boolean right_bumper = gamepad2.right_bumper;
         if (right_bumper)  {
             hookPosition = 0.0;
