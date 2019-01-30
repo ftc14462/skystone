@@ -94,7 +94,7 @@ public class AutonRoverRuckus14462Depot extends AutonRoverRuckus14462 {
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
 
-        lowerFromLander();
+        /*lowerFromLander();*/
         moveToDepot();
         depositMarker();
         sleep(1000);     // pause for servos to move
@@ -108,7 +108,7 @@ public class AutonRoverRuckus14462Depot extends AutonRoverRuckus14462 {
      * This is where the robot deposits the marker
      */
     protected void depositMarker() {
-        robot.intakeDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        robot.intakeDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         runtime.reset();
         robot.intakeDrive.setPower(Math.abs(0.5));
         double timeoutS = 5;
@@ -125,6 +125,6 @@ public class AutonRoverRuckus14462Depot extends AutonRoverRuckus14462 {
      * This is where we move the robot from the lander to the depot
      */
     protected void moveToDepot() {
-        encoderDrive(DRIVE_SPEED, 43,  43, 5.0);  // S1: Forward 8 Inches with 5 Sec timeout
+        encoderDrive(DRIVE_SPEED, 47,  47, 5.0);  // S1: Forward 8 Inches with 5 Sec timeout
     }
 }

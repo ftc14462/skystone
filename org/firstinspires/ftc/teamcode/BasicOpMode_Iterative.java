@@ -63,6 +63,7 @@ public class BasicOpMode_Iterative extends OpMode
     private DcMotor linearDrive = null;
     private Servo hookDrive = null;
     private double sensitivity = 0.9;
+    private boolean isItUP = false;
     private final static double hook_home = 0.0;
     private double hookPosition;
 
@@ -151,10 +152,10 @@ public class BasicOpMode_Iterative extends OpMode
         // Make X button spin robot
         boolean xButtonPushed = gamepad1.x;
         if (xButtonPushed) {
-                // rightDrive.setPower(0.5);
-                // leftDrive.setPower(-0.5);
-                rightPower = 0.5;
-                leftPower = -0.5;
+            // rightDrive.setPower(0.5);
+            // leftDrive.setPower(-0.5);
+            rightPower = 0.5;
+            leftPower = -0.5;
         }
 
         boolean yButtonPushed = gamepad1.y;
@@ -179,23 +180,18 @@ public class BasicOpMode_Iterative extends OpMode
         intakePower = leftStickUp;
         //intakeDrive.setPower(leftStickUp);
 
-        float sensitivityLinear = 0.75f;
+        //This code moves the linear slide down.
         double linearPower = 0;
-        int linearPosition = linearDrive.getCurrentPosition();
-        linearPosition = 2201;
-        if (linearPosition > 0) {
-            //This code moves the linear slide down.
-            float left_trigger = gamepad2.left_trigger;
-            left_trigger = left_trigger * -1 * sensitivityLinear;
-            linearPower = left_trigger;
-        }
-        if (linearPosition < 2200) {
-            //This code moves the linear slide up.     HEMLO 2
-            float right_trigger = gamepad2.right_trigger;
-            right_trigger = right_trigger * sensitivityLinear;
-            if (right_trigger > 0) {
-                linearPower = right_trigger;
-            }
+        float left_trigger = gamepad2.left_trigger;
+        float sensitivityLinear = 0.75f;
+        left_trigger = left_trigger * -1 * sensitivityLinear;
+        linearPower = left_trigger;
+
+        //This code moves the linear slide up.     HEMLO 2
+        float right_trigger = gamepad2.right_trigger;
+        right_trigger = right_trigger * sensitivityLinear;
+        if (right_trigger > 0) {
+            linearPower = right_trigger;
         }
 
         boolean right_bumper = gamepad2.right_bumper;
@@ -204,19 +200,20 @@ public class BasicOpMode_Iterative extends OpMode
         }
         boolean left_bumper = gamepad2.left_bumper;
         if (left_bumper) {
-            hookPosition = 1.0;
+            hookPosition = 0.35;
         }
 
-        /*hookDrive.setPosition(hookPosition);
+        hookDrive.setPosition(hookPosition);
         linearDrive.setPower(linearPower);
         intakeDrive.setPower(intakePower);
         rightDrive.setPower(rightPower);
-        leftDrive.setPower(leftPower);*/
+        leftDrive.setPower(leftPower);
         // Show the elapsed game time and wheel power.
         telemetry.addData("Status", "Run Time: " + runtime.toString());
         telemetry.addData("Motors", "left (%.2f), right (%.2f), intakePower (%.2f), LinearPower (%.2f)", leftPower, rightPower, intakePower, linearPower);
         telemetry.addData("sensitivity", sensitivity);
         telemetry.addData("hookPosition", hookPosition);
+        int linearPosition = linearDrive.getCurrentPosition();
         telemetry.addData("LinearPosition", linearPosition);
     }
 

@@ -85,7 +85,8 @@ public abstract class AutonRoverRuckus14462 extends LinearOpMode {
      */
     // this code lowers the robot from the lander.                      HEMLO 3
     protected void lowerFromLander() {
-        robot.linearDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        robot.linearDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        robot.linearDrive.setTargetPosition(2200);
         runtime.reset();
         robot.linearDrive.setPower(Math.abs(0.5));
         double timeoutS = 5;
@@ -99,7 +100,7 @@ public abstract class AutonRoverRuckus14462 extends LinearOpMode {
         robot.linearDrive.setPower(0);
 
         //We are moving the hook that is holding us down so we can move around
-        double hookPosition = 1.0;
+        double hookPosition = 0.0;
         robot.hookDrive.setPosition(hookPosition);
         }
 
