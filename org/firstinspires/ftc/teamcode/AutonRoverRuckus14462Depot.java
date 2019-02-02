@@ -100,7 +100,9 @@ public class AutonRoverRuckus14462Depot extends AutonRoverRuckus14462 {
         sleep(1000);     // pause for servos to move
 
         telemetry.addData("Path", "Complete");
-        telemetry.addData("encoder",robot.leftDrive.getCurrentPosition()
+        telemetry.addData("left",robot.leftDrive.getCurrentPosition()
+        );
+        telemetry.addData("right",robot.rightDrive.getCurrentPosition()
         );
         telemetry.update();
     }
@@ -108,9 +110,9 @@ public class AutonRoverRuckus14462Depot extends AutonRoverRuckus14462 {
      * This is where the robot deposits the marker
      */
     protected void depositMarker() {
-        robot.intakeDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        robot.intakeDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         runtime.reset();
-        robot.intakeDrive.setPower(Math.abs(0.5));
+        robot.intakeDrive.setPower(Math.abs(-0.5));
         double timeoutS = 5;
         while (opModeIsActive() &&
                 (runtime.seconds() < timeoutS)) {
@@ -125,6 +127,6 @@ public class AutonRoverRuckus14462Depot extends AutonRoverRuckus14462 {
      * This is where we move the robot from the lander to the depot
      */
     protected void moveToDepot() {
-        encoderDrive(DRIVE_SPEED, 47,  47, 5.0);  // S1: Forward 8 Inches with 5 Sec timeout
+        encoderDrive(DRIVE_SPEED, 7000,  7000, 1.5);  // S1: Forward 8 Inches with 5 Sec timeout
     }
 }

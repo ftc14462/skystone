@@ -122,7 +122,7 @@ public abstract class AutonRoverRuckus14462 extends LinearOpMode {
         if (opModeIsActive()) {
 
             // Determine new target position, and pass to motor controller
-            int encoderdistence = (int) (leftInches * COUNTS_PER_INCH);
+            int encoderdistence = (int) (rightInches * COUNTS_PER_INCH);
             int initialposition = robot.leftDrive.getCurrentPosition();
             newLeftTarget = robot.leftDrive.getCurrentPosition() + encoderdistence;
             newRightTarget = robot.rightDrive.getCurrentPosition() + encoderdistence;
