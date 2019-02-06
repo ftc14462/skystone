@@ -113,7 +113,7 @@ public class AutonRoverRuckus14462Depot extends AutonRoverRuckus14462 {
         robot.intakeDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         runtime.reset();
         robot.intakeDrive.setPower(Math.abs(-0.5));
-        double timeoutS = 5;
+        double timeoutS = 15;
         while (opModeIsActive() &&
                 (runtime.seconds() < timeoutS)) {
 
@@ -127,6 +127,6 @@ public class AutonRoverRuckus14462Depot extends AutonRoverRuckus14462 {
      * This is where we move the robot from the lander to the depot
      */
     protected void moveToDepot() {
-        encoderDrive(DRIVE_SPEED, 7000,  7000, 1.5);  // S1: Forward 8 Inches with 5 Sec timeout
+        encoderDrive(DRIVE_SPEED, 7000,  7000, 1.8);  // S1: Forward 8 Inches with 5 Sec timeout
     }
 }

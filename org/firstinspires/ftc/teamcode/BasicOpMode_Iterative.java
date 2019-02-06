@@ -200,7 +200,7 @@ public class BasicOpMode_Iterative extends OpMode
         }
         boolean left_bumper = gamepad2.left_bumper;
         if (left_bumper) {
-            hookPosition = 0.35;
+            hookPosition = 0.25;
         }
 
         hookDrive.setPosition(hookPosition);
