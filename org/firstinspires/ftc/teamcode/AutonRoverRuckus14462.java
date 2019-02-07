@@ -107,7 +107,7 @@ public abstract class AutonRoverRuckus14462 extends LinearOpMode {
     /*
      *  Method to perform a relative move, based on encoder counts.
      *  Encoders are not reset as the move is based on the current position.
-     *  Move will stop if any of three conditions occur:
+     *  Move will stop if any of three conditions occur:                    HEMLO 5
      *  1) Move gets to the desired position
      *  2) Move runs out of time
      *  3) Driver stops the opmode running.
