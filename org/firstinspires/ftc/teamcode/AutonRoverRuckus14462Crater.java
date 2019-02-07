@@ -98,7 +98,7 @@ public class AutonRoverRuckus14462Crater extends AutonRoverRuckus14462 {
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
 
-        /*lowerFromLander();*/
+        lowerFromLander();
         moveToCrater();
         sleep(1000);     // pause for servos to move
 

@@ -76,8 +76,7 @@ public abstract class AutonRoverRuckus14462 extends LinearOpMode {
     static final double     WHEEL_DIAMETER_INCHES   = 3.5 ;     // For figuring circumference
     static final double     COUNTS_PER_INCH         = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) /
             (WHEEL_DIAMETER_INCHES * 3.1415);
-    static final double     DRIVE_SPEED             = 0.6;
-    static final double     TURN_SPEED              = 0.5;
+    static final double     DRIVE_SPEED             = -0.6;
 
 
     /**
@@ -88,7 +87,7 @@ public abstract class AutonRoverRuckus14462 extends LinearOpMode {
         robot.linearDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         robot.linearDrive.setTargetPosition(2200);
         runtime.reset();
-        robot.linearDrive.setPower(Math.abs(0.5));
+        robot.linearDrive.setPower(Math.abs(0.75));
         double timeoutS = 5;
 
         // Display it for the driver.
@@ -103,6 +102,7 @@ public abstract class AutonRoverRuckus14462 extends LinearOpMode {
         double hookPosition = 0.0;
         robot.hookDrive.setPosition(hookPosition);
         }
+
 
     /*
      *  Method to perform a relative move, based on encoder counts.

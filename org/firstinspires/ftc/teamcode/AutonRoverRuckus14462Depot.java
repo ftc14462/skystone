@@ -94,8 +94,9 @@ public class AutonRoverRuckus14462Depot extends AutonRoverRuckus14462 {
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
 
-        /*lowerFromLander();*/
+        lowerFromLander();
         moveToDepot();
+        turnAround();
         depositMarker();
         sleep(1000);     // pause for servos to move
 
@@ -106,6 +107,26 @@ public class AutonRoverRuckus14462Depot extends AutonRoverRuckus14462 {
         );
         telemetry.update();
     }
+
+    /**
+     * This is where the robot turns around to deposits the marker
+     */
+    protected void turnAround(){
+        runtime.reset();
+        robot.rightDrive.setPower(0.5);
+        robot.leftDrive.setPower(-0.5);
+        double timeoutS = 4;
+        while (opModeIsActive() &&
+                (runtime.seconds() < timeoutS)) {
+
+            // Display it for the driver.
+            //telemetry.addData("Path1",  "Running to %7d", timeoutS);
+            telemetry.update();
+        }
+        robot.leftDrive.setPower(0);
+        robot.rightDrive.setPower(0);
+    }
+
     /**
      * This is where the robot deposits the marker
      */
