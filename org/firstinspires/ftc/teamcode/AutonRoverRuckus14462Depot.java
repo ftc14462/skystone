@@ -30,9 +30,7 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.util.ElapsedTime;
 
 /**
  * This file illustrates the concept of driving a path based on encoder counts.
@@ -95,6 +93,7 @@ public class AutonRoverRuckus14462Depot extends AutonRoverRuckus14462 {
         waitForStart();
 
         lowerFromLander();
+        jerkForward();
         moveToDepot();
         turnAround();
         depositMarker();
@@ -115,7 +114,7 @@ public class AutonRoverRuckus14462Depot extends AutonRoverRuckus14462 {
         runtime.reset();
         robot.rightDrive.setPower(0.5);
         robot.leftDrive.setPower(-0.5);
-        double timeoutS = 4;
+        double timeoutS = 1.1;
         while (opModeIsActive() &&
                 (runtime.seconds() < timeoutS)) {
 
@@ -133,7 +132,7 @@ public class AutonRoverRuckus14462Depot extends AutonRoverRuckus14462 {
     protected void depositMarker() {
         robot.intakeDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         runtime.reset();
-        robot.intakeDrive.setPower(Math.abs(-0.5));
+        robot.intakeDrive.setPower(0.5);
         double timeoutS = 15;
         while (opModeIsActive() &&
                 (runtime.seconds() < timeoutS)) {
@@ -148,6 +147,6 @@ public class AutonRoverRuckus14462Depot extends AutonRoverRuckus14462 {
      * This is where we move the robot from the lander to the depot
      */
     protected void moveToDepot() {
-        encoderDrive(DRIVE_SPEED, 7000,  7000, 1.8);  // S1: Forward 8 Inches with 5 Sec timeout
+        encoderDrive(DRIVE_SPEED, -7000,  -7000, 2.2);  // S1: Forward 8 Inches with 5 Sec timeout
     }
 }

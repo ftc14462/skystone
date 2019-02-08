@@ -55,8 +55,8 @@ public class HardwarePushbot
     /* Public OpMode members. */
     public DcMotor  leftDrive   = null;
     public DcMotor  rightDrive  = null;
-    public DcMotor  leftArm     = null;
-    public Servo    hookDrive   = null;
+    /*public DcMotor  leftArm     = null;*/
+    /*public Servo    hookDrive   = null;*/
 
 
     public static final double MID_SERVO       =  0.5 ;
@@ -85,7 +85,8 @@ public class HardwarePushbot
         leftDrive  = hwMap.get(DcMotor.class, "left motor");
         rightDrive = hwMap.get(DcMotor.class, "right motor");
         intakeDrive = hwMap.get (DcMotor.class, "intakeDrive");
-        hookDrive = hwMap.get (Servo.class, "hookDrive");
+        linearDrive = hwMap.get (DcMotor.class, "linearDrive");
+        /*hookDrive = hwMap.get (Servo.class, "hookDrive");*/
         //leftArm    = hwMap.get(DcMotor.class, "left_arm");
         leftDrive.setDirection(DcMotor.Direction.FORWARD); // Set to REVERSE if using AndyMark motors
         rightDrive.setDirection(DcMotor.Direction.REVERSE);// Set to FORWARD if using AndyMark motors
@@ -96,6 +97,7 @@ public class HardwarePushbot
         rightDrive.setPower(0);
         //leftArm.setPower(0);
         intakeDrive.setPower(0);
+        linearDrive.setPower(0);
 
         // Set all motors to run without encoders.
         // May want to use RUN_USING_ENCODERS if encoders are installed.
@@ -103,6 +105,7 @@ public class HardwarePushbot
         rightDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         //leftArm.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         intakeDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        //linearDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         // Define and initialize ALL installed servos.
         //leftClaw  = hwMap.get(Servo.class, "left_hand");

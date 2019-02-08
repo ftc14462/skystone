@@ -29,10 +29,10 @@
 
 package org.firstinspires.ftc.teamcode;
 
-        import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-        import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-        import com.qualcomm.robotcore.hardware.DcMotor;
-        import com.qualcomm.robotcore.util.ElapsedTime;
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
 /**
  * This file illustrates the concept of driving a path based on encoder counts.
@@ -66,7 +66,7 @@ package org.firstinspires.ftc.teamcode;
 public class AutonRoverRuckus14462Crater extends AutonRoverRuckus14462 {
 
     /* Declare OpMode members. */
-   // HardwarePushbot         robot   = new HardwarePushbot();   // Use a Pushbot's hardware
+    // HardwarePushbot         robot   = new HardwarePushbot();   // Use a Pushbot's hardware
     //private ElapsedTime     runtime = new ElapsedTime();
 
     @Override
@@ -90,7 +90,7 @@ public class AutonRoverRuckus14462Crater extends AutonRoverRuckus14462 {
 
         // Send telemetry message to indicate successful Encoder reset
         telemetry.addData("Path0",  "Starting at %7d, %7d",
-                 robot.leftDrive.getCurrentPosition()
+                robot.leftDrive.getCurrentPosition()
                 ,robot.rightDrive.getCurrentPosition()
         );
         telemetry.update();
@@ -99,6 +99,7 @@ public class AutonRoverRuckus14462Crater extends AutonRoverRuckus14462 {
         waitForStart();
 
         lowerFromLander();
+        jerkForward();
         moveToCrater();
         sleep(1000);     // pause for servos to move
 
@@ -112,6 +113,6 @@ public class AutonRoverRuckus14462Crater extends AutonRoverRuckus14462 {
      */
     //          HEMLO 5
     protected void moveToCrater() {
-        encoderDrive(DRIVE_SPEED, 7000,  7000, 1.0);  // S1: Forward 8 Inches with 5 Sec timeout
+        encoderDrive(DRIVE_SPEED, -7000,  -7000, 2.5);  // S1: Forward 8 Inches with 5 Sec timeout
     }
 }

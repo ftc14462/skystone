@@ -61,7 +61,7 @@ public class BasicOpMode_Iterative extends OpMode
     private DcMotor rightDrive = null;
     private DcMotor intakeDrive = null;
     private DcMotor linearDrive = null;
-    private Servo hookDrive = null;
+/*    private Servo hookDrive = null;*/
     private double sensitivity = 0.9;
     private boolean isItUP = false;
     private final static double hook_home = 0.0;
@@ -81,14 +81,14 @@ public class BasicOpMode_Iterative extends OpMode
         rightDrive = hardwareMap.get(DcMotor.class, "right motor");
         intakeDrive = hardwareMap.get(DcMotor.class, "intakeDrive");
         linearDrive = hardwareMap.get(DcMotor.class, "linearDrive");
-        hookDrive = hardwareMap.get (Servo.class,"hookDrive");
+       /* hookDrive = hardwareMap.get (Servo.class,"hookDrive");*/
 
 
         // Most robots need the motor on one side to be reversed to drive forward
         // Reverse the motor that runs backwards when connected directly to the battery
         leftDrive.setDirection(DcMotor.Direction.REVERSE);
         rightDrive.setDirection(DcMotor.Direction.FORWARD);
-        hookDrive.setPosition(hook_home);
+     /*   hookDrive.setPosition(hook_home);*/
 
         // Tell the driver that initialization is complete.
         telemetry.addData("Status", "Initialized");
@@ -203,7 +203,7 @@ public class BasicOpMode_Iterative extends OpMode
             hookPosition = 0.25;
         }
 
-        hookDrive.setPosition(hookPosition);
+        /*hookDrive.setPosition(hookPosition);*/
         linearDrive.setPower(linearPower);
         intakeDrive.setPower(intakePower);
         rightDrive.setPower(rightPower);

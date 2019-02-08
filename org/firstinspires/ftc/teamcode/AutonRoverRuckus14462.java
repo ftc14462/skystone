@@ -33,7 +33,6 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 /**
@@ -76,8 +75,12 @@ public abstract class AutonRoverRuckus14462 extends LinearOpMode {
     static final double     WHEEL_DIAMETER_INCHES   = 3.5 ;     // For figuring circumference
     static final double     COUNTS_PER_INCH         = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) /
             (WHEEL_DIAMETER_INCHES * 3.1415);
-    static final double     DRIVE_SPEED             = -0.6;
+    static final double     DRIVE_SPEED             = 0.6;
 
+    public void jerkForward() {
+        encoderDrive(DRIVE_SPEED, 7000,  7000, 0.2);  // S1: Forward 8 Inches with 5 Sec timeout
+        sleep(200);
+    }
 
     /**
      * This is where we make the robot lower from the lander
@@ -85,22 +88,25 @@ public abstract class AutonRoverRuckus14462 extends LinearOpMode {
     // this code lowers the robot from the lander.                      HEMLO 3
     protected void lowerFromLander() {
         robot.linearDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        robot.linearDrive.setTargetPosition(2200);
+        robot.linearDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        robot.linearDrive.setTargetPosition(10630);
+        robot.linearDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         runtime.reset();
-        robot.linearDrive.setPower(Math.abs(0.75));
-        double timeoutS = 5;
+        robot.linearDrive.setPower(Math.abs(0.9));
+        double timeoutS = 25;
 
         // Display it for the driver.
         while (opModeIsActive() &&
                 (runtime.seconds() < timeoutS) && (robot.linearDrive.isBusy())) {
-            //telemetry.addData("Path1",  "Running to %7d", timeoutS);
+            /*telemetry.addData("linear slide","Running to %5i , current position %5i , current time %7.2d", robot.linearDrive.getTargetPosition()
+                    , robot.linearDrive.getCurrentPosition(), runtime.seconds() );*/
             telemetry.update();
         }
         robot.linearDrive.setPower(0);
 
         //We are moving the hook that is holding us down so we can move around
-        double hookPosition = 0.0;
-        robot.hookDrive.setPosition(hookPosition);
+        /*double hookPosition = 0.0;
+        robot.hookDrive.setPosition(hookPosition);*/
         }
 
 
